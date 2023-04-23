@@ -1,14 +1,25 @@
 <template>
-  <h1>Wordle Mind Bender</h1>
+  <v-container>
+    <v-row class="py-4">
+      <v-spacer />
+      <h1>Wordle Mind Bender</h1>
+      <v-spacer />
+    </v-row>
 
-  <GameBoard :game="game" @letterClick="addChar" />
+    <GameBoard :game="game" @letterClick="addChar" />
 
-  <KeyBoard @letterClick="addChar" :guessedLetters="game.guessedLetters" />
+    <KeyBoard @letterClick="addChar" :guessedLetters="game.guessedLetters" />
 
-  <v-btn @click="checkGuess" @keyup.enter="checkGuess"> Check </v-btn>
-
-  <h2>{{ guess }}</h2>
-  <h3>{{ game.secretWord }}</h3>
+    <v-row>
+      <v-spacer />
+      <v-col cols="auto">
+        <v-btn @click="checkGuess" @keyup.enter="checkGuess"> Check </v-btn>
+      </v-col>
+      <v-col cols="auto">{{ guess }}</v-col>
+      <v-col cols="auto">{{ game.secretWord }}</v-col>
+      <v-spacer />
+    </v-row>
+  </v-container>
 </template>
 
 <script setup lang="ts">

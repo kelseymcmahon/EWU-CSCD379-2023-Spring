@@ -1,7 +1,9 @@
 <template>
-  <v-btn :color="props.color">
-    {{ props.char }}
-  </v-btn>
+  <v-sheet :color="props.color" class="letter-button d-flex">
+    <div class="font-weight-bold text-uppercase text-h4 ma-auto">
+      {{ props.char }}
+    </div>
+  </v-sheet>
 </template>
 
 <script setup lang="ts">
@@ -15,3 +17,10 @@ const props = withDefaults(defineProps<Props>(), {
   color: 'grey'
 })
 </script>
+<style>
+.letter-button {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+</style>
