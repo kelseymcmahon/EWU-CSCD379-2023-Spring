@@ -1,16 +1,4 @@
 <template>
-  <!-- <header>
-    <div class="wrapper">
-      <nav>
-        <RouterLink to="/">Home</RouterLink> | <RouterLink to="/wordle">Wordle</RouterLink> |
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-      <v-btn @click="setInverseTheme"> Inverse Theme </v-btn>
-      <v-btn @click="setDarkTheme"> Dark Theme </v-btn>
-    </div>
-  </header>
-
-  <RouterView /> -->
   <v-app id="vue-app">
     <v-app-bar color="primary" density="compact" :elevation="2">
       <template v-slot:prepend>
@@ -47,8 +35,18 @@
       </template>
     </v-app-bar>
     <v-navigation-drawer v-model="drawer" location="left" temporary>
-      <v-list :items="items"></v-list>
+      <v-list>
+        <v-list-item v-for="(link, i) in navLinks" :key="i" :to="link.route">
+          <template v-slot:prepend>
+            <v-icon color="primary" :icon="link.icon" />
+          </template>
+          <v-list-item-title v-text="link.name" />
+        </v-list-item>
+      </v-list>
     </v-navigation-drawer>
+    <v-main>
+      <RouterView />
+    </v-main>
   </v-app>
 </template>
 
@@ -59,22 +57,21 @@ import { ref } from 'vue'
 const theme = useTheme()
 const currentTheme = ref('Dark')
 const drawer = ref(false)
-const items = [
+const navLinks = [
   {
-    title: 'Home',
-    value: 'foo'
+    name: 'Home',
+    icon: 'mdi-unicorn-variant',
+    route: '/'
   },
   {
-    title: 'Game',
-    value: 'bar'
+    name: 'Wordle',
+    icon: 'mdi-file-word-box',
+    route: '/wordle'
   },
   {
-    title: 'Fizz',
-    value: 'fizz'
-  },
-  {
-    title: 'Buzz',
-    value: 'buzz'
+    name: 'About',
+    icon: 'mdi-chat-processing',
+    route: '/about'
   }
 ]
 
