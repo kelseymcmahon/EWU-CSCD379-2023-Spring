@@ -15,8 +15,9 @@
       <v-col cols="auto">
         <v-btn @click="checkGuess" @keyup.enter="checkGuess"> Check </v-btn>
       </v-col>
-      <v-col cols="auto">{{ guess }}</v-col>
-      <v-col cols="auto">{{ game.secretWord }}</v-col>
+      <v-col cols="auto">
+        <ValidWordsDialog :guess="guess" @word-hint-clicked="setWord" />
+      </v-col>
       <v-spacer />
     </v-row>
   </v-container>
@@ -27,15 +28,17 @@ import { WordleGame } from '@/scripts/wordleGame'
 import { ref, reactive, onMounted, onUnmounted } from 'vue'
 import GameBoard from '../components/GameBoard.vue'
 import KeyBoard from '../components/KeyBoard.vue'
+import ValidWordsDialog from '../components/ValidWordsDialog.vue'
 import type { Letter } from '@/scripts/letter'
+import { Word } from '@/scripts/word'
 
 const guess = ref('')
 const game = reactive(new WordleGame())
-console.log(game.secretWord)
 
 onMounted(() => {
   window.addEventListener('keyup', keyPress)
 })
+
 onUnmounted(() => {
   window.removeEventListener('keyup', keyPress)
 })
@@ -57,10 +60,22 @@ function keyPress(event: KeyboardEvent) {
   } else if (event.key === 'Backspace') {
     guess.value = guess.value.slice(0, -1)
     game.guess.pop()
-    console.log('Back')
   } else if (event.key.length === 1 && event.key !== ' ') {
     guess.value += event.key.toLowerCase()
     game.guess.push(event.key.toLowerCase())
   }
+}
+
+function setWord(word: string) {
+  game.guess = new Word()
+  guess.value = word
+  for (var i = 0; i < word.length; i++) {
+    game.guess.push(word[i])
+  }
+  const index = game.guesses.indexOf(game.guess)
+  game.guesses[index] = game.guess
+  console.log(word)
+  console.log(game.guess)
+  console.log(game.guesses[index])
 }
 </script>
