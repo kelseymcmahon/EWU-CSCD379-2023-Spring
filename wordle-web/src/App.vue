@@ -40,7 +40,7 @@
           <template v-slot:prepend>
             <v-icon color="primary" :icon="link.icon" />
           </template>
-          <v-list-item-title v-text="link.name" />
+          <v-list-item-title>{{ link.name }}</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
